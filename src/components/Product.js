@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
 class Product extends Component {
+
+  showProductName = (str) => {
+    console.log(str)
+    console.log(this.props.name)
+  }
+
   render() {
     return (
       <div className="col-xs-6 col-sm-6 col-md-3 col-lg-3">
@@ -12,7 +18,7 @@ class Product extends Component {
               { this.props.price } VNĐ
             </p>
             <p>
-              <a className="btn btn-primary">Mua hàng</a>
+              <a className="btn btn-primary" onClick={() => this.showProductName(this.props.price)}>Mua hàng</a>
             </p>
           </div>
         </div>
