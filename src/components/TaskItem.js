@@ -5,17 +5,17 @@ class TaskItem extends Component {
   render() {
     return (
     	<tr>
-        <td className="text-center">1</td>
+        <td className="text-center">{ this.props.index + 1 }</td>
         <td>
-          Nguyễn Đức Khôi
+          { this.props.name }
         </td>
         <td className="text-center">
-          <span className="label label-success">
-            Kích hoạt
+          <span className={ this.props.status === 1 ? 'label label-success' : 'label label-warning' }>
+            { this.props.status === 1 ? 'Kích hoạt' : 'Ẩn' }
           </span>
         </td>
         <td className="text-center">
-          <button type="button" className="btn btn-warning">Sửa</button>
+          <button type="button" className="btn btn-warning" onClick={ () => this.props.activeForm('edit', this.props.index ) }>Sửa</button>
           &nbsp;
           <button type="button" className="btn btn-danger">Xóa</button>
         </td>

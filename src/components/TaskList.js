@@ -4,6 +4,16 @@ import TaskItem from './TaskItem';
 class TaskList extends Component {
 
   render() {
+    let work = this.props.works.map((work, index) => {
+      return <TaskItem 
+          name={work.name}
+          status={work.status}
+          index={index}
+          key={index}
+          activeForm={ (action, index) => this.props.activeForm(action, index) }
+        />
+    });
+
     return (
     	<table className="table table-bordered table-hover">
         <thead>
@@ -29,7 +39,7 @@ class TaskList extends Component {
             </td>
             <td></td>
           </tr>
-          <TaskItem />
+          { work }
         </tbody>
       </table>
     );

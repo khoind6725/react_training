@@ -12,7 +12,11 @@ class App extends Component {
     this.state = {
       showForm: false,
       actionAdd : true,
-      workList: []
+      workList: [],
+      dataEdit: {
+        name: '',
+        status: ''
+      }
     }
   }
 
@@ -20,31 +24,40 @@ class App extends Component {
     let workList = this.state.workList;
     workList.push({
                   name: workName,
-                  status: status
+                  status: +status
                 })
     this.setState({
       workList: workList
     })
   }
 
-  activeForm = (action) => {
+  activeForm = (action, index = null) => {
     if (action === 'add') {
       this.setState({
         showForm : true,
-        actionAdd : true
+        actionAdd : true,
+        dataEdit: {
+          name: '',
+          status: ''
+        }
       })
     }
     else {
       this.setState({
         showForm : true,
-        actionAdd : false
+        actionAdd : false,
+        dataEdit: this.state.workList[index]
       })
     }
   }
 
   removeForm = () => {
     this.setState({
-      showForm : false
+      showForm : false,
+      dataEdit: {
+        name: '',
+        status: ''
+      }
     })
   }
 
@@ -57,7 +70,7 @@ class App extends Component {
         <div className="row">
           {/*TaskForm*/}
           { this.state.showForm === true ? 
-            <TaskForm actionAdd={this.state.actionAdd} removeForm={() => this.removeForm()}  addWork={(name, status) => this.addWork(name, status)}/> : ''
+            <TaskForm actionAdd={this.state.actionAdd} removeForm={() => this.removeForm()}  addWork={(name, status) => this.addWork(name, status)} dataEdit={this.state.dataEdit}/> : ''
           }
           <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
             <div className="form-group">
@@ -72,7 +85,10 @@ class App extends Component {
             <div className="row mt-20">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 {/*TaskList*/}
-                <TaskList />
+                <TaskList 
+                  works={ this.state.workList }
+                  activeForm={ (action, index) => this.activeForm(action, index) }
+                />
               </div>
             </div>
           </div>
