@@ -39,3 +39,12 @@
   font-weight: bold;
   text-align: center;
 }
+
+.sort-selected::after {
+  content: '\f00c';
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  margin-left: 0 0 0 10px;
+  display: inline-block;
+}

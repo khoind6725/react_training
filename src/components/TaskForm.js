@@ -5,8 +5,36 @@ class TaskForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      id : '',
       name: '',
       status: false
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.task) {
+      this.setState({
+        id: this.props.task.id,
+        name: this.props.task.name,
+        status: this.props.task.status
+      })
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.task) {
+      this.setState({
+        id: nextProps.task.id,
+        name: nextProps.task.name,
+        status: nextProps.task.status
+      })
+    }
+    else if (!nextProps.task) {
+      this.setState({
+        id : '',
+        name: '',
+        status: false
+      });
     }
   }
 
@@ -18,6 +46,9 @@ class TaskForm extends Component {
     let target = e.target
     let name = target.name
     let value = target.value
+    if (name === 'status') {
+      value = target.value === 'true' ? true : false
+    }
     this.setState({
       [name] : value
     })
@@ -25,15 +56,26 @@ class TaskForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.props.onSubmit(this.state.name, this.state.status === "true" ? true : false )
+    this.props.onSubmit(this.state)
+    // Cancel & clear form
+    this.onClear()
+    this.onCloseForm()
+  }
+
+  onClear = () => {
+    this.setState({
+      name: '',
+      status: false
+    })
   }
 
   render() {
+    let { id } = this.state
     return (
       <div className="panel panel-warning">
         <div className="panel-heading">
           <h3 className="panel-title">
-            Thêm Công Việc
+            { id !== '' ? 'Cập nhật công việc' : 'Thêm Công Việc'}
             <span 
               className="fa fa-times-circle pull-right"
               onClick={ this.onCloseForm }
@@ -66,8 +108,14 @@ class TaskForm extends Component {
             </select>
             <br/>
             <div className="text-center">
-              <button type="submit" className="btn btn-warning">Thêm</button>&nbsp;
-              <button type="submit" className="btn btn-danger">Hủy Bỏ</button>
+              <button 
+                type="submit" 
+                className="btn btn-warning">Lưu Lại</button>&nbsp;
+              <button 
+                type="button" 
+                className="btn btn-danger"
+                onClick={ this.onClear }
+              >Hủy Bỏ</button>
             </div>
           </form>
         </div>
