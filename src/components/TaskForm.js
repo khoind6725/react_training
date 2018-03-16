@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
 
 class TaskForm extends Component {
 
@@ -56,7 +58,10 @@ class TaskForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.props.onSubmit(this.state)
+    // Redux
+    this.props.onAddTask(this.state)
+    // End redux
+    // this.props.onSubmit(this.state)
     // Cancel & clear form
     this.onClear()
     this.onCloseForm()
@@ -78,7 +83,7 @@ class TaskForm extends Component {
             { id !== '' ? 'Cập nhật công việc' : 'Thêm Công Việc'}
             <span 
               className="fa fa-times-circle pull-right"
-              onClick={ this.onCloseForm }
+              onClick={ this.props.onCloseForm }
               role="button"
             >
             </span>
@@ -124,4 +129,20 @@ class TaskForm extends Component {
   }
 }
 
-export default TaskForm;
+const mapStateToProps = state => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onAddTask : (task) => {
+      dispatch(actions.addTask(task))
+    },
+    onCloseForm: () => {
+      dispatch(actions.closeForm())
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);

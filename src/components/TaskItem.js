@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import * as actions from './../actions/index'
 class TaskItem extends Component {
 
-  onUpdateStatus = () => {
-    this.props.onUpdateStatus(this.props.task.id)
-  }
-
-  onDelete = () => {
-    this.props.onDelete(this.props.task.id)
-  }
-
-  onUpdate = () => {
-    this.props.onUpdate(this.props.task.id)
+  onDeleteItem = () => {
+    this.props.onDeleteTask(this.props.task.id)
+    this.props.onCloseForm()
   }
 
   render() {
@@ -23,21 +17,21 @@ class TaskItem extends Component {
         <td className="text-center">
           <span
             role="button"
-            onClick={ this.onUpdateStatus } 
+            onClick={ () => this.props.onUpdateStatus(this.props.task.id) } 
             className={ task.status === true ? "label label-success" : "label label-danger"}>
             { task.status === true ? "Kích hoạt" : "Ẩn"}
           </span>
         </td>
         <td className="text-center">
           <button 
-            onClick={ this.onUpdate }
+            onClick={ () => this.props.onUpdate(this.props.task.id) }
             type="button" 
             className="btn btn-warning">
             <span className="fa fa-pencil mr-5"></span> Sửa
           </button>
           &nbsp;
           <button 
-            onClick={ this.onDelete } 
+            onClick={ () => this.onDeleteItem() } 
             type="button" 
             className="btn btn-danger">
             <span className="fa fa-trash mr-5"></span> Xóa
@@ -48,4 +42,24 @@ class TaskItem extends Component {
   }
 }
 
-export default TaskItem;
+const mapStateToProps = state => {
+  return {
+    
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onUpdateStatus: (id) => {
+      dispatch(actions.updateStatus(id))
+    },
+    onDeleteTask: (id) => {
+      dispatch(actions.deleteTask(id))
+    },
+    onCloseForm: () => {
+      dispatch(actions.closeForm())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskItem);
