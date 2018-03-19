@@ -8,6 +8,11 @@ class TaskItem extends Component {
     this.props.onCloseForm()
   }
 
+  onEditTask = () => {
+    this.props.onOpenForm()
+    this.props.onEditTask(this.props.task)
+  }
+
   render() {
     let { task, index } = this.props
     return (
@@ -24,7 +29,7 @@ class TaskItem extends Component {
         </td>
         <td className="text-center">
           <button 
-            onClick={ () => this.props.onUpdate(this.props.task.id) }
+            onClick={ this.onEditTask }
             type="button" 
             className="btn btn-warning">
             <span className="fa fa-pencil mr-5"></span> Sửa
@@ -58,6 +63,12 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onCloseForm: () => {
       dispatch(actions.closeForm())
+    },
+    onOpenForm: () => {
+      dispatch(actions.openForm())
+    },
+    onEditTask: (task) => {
+      dispatch(actions.editTask(task))
     }
   }
 }

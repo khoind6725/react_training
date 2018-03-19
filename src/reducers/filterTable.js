@@ -1,16 +1,17 @@
 import * as types from './../constants/ActionTypes';
 
-var initialState = false; // closeform
+var initialState = {
+	name: '',
+	status: -1
+};
 
 var myReducer = (state = initialState, action) => {
 	switch(action.type) {
-		case types.TOGGLE_FORM :
-			state = !state;
-			return state;
-		case types.CLOSE_FORM :
-			return false;
-		case types.OPEN_FORM :
-			return true;
+		case types.FILTER_TABLE :
+			return {
+				name: action.filter.name,
+				status: +action.filter.status
+			}
 		default: 
 			return state;
 	}
