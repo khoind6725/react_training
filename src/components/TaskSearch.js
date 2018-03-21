@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
 
 class TaskSearch extends Component {
 
@@ -47,4 +49,19 @@ class TaskSearch extends Component {
   }
 }
 
-export default TaskSearch;
+const mapStateToProps = state => {
+  return {
+    keyWord: state.keyWord
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onSearch: (keyWord) => {
+      dispatch(actions.searchTask(keyWord))
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskSearch);

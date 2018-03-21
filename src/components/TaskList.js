@@ -27,7 +27,13 @@ class TaskList extends Component {
   }
 
   render() {
-    let { tasks, filterTable } = this.props
+    let { tasks, filterTable, keyWord } = this.props
+
+    if (keyWord) {
+      tasks = tasks.filter((task) => {
+        return task.name.toLowerCase().indexOf(keyWord.toLowerCase()) !== -1;
+      })
+    }
 
     // filter on table
     if (filterTable.name) {
@@ -97,7 +103,8 @@ class TaskList extends Component {
 const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,
-    filterTable: state.filterTable
+    filterTable: state.filterTable,
+    keyWord: state.search
   }
 }
 

@@ -58,3 +58,10 @@ export const filterTask = (filter) => {
 		filter
 	}
 }
+
+export const searchTask = (keyWord) => {
+	return {
+		type: types.SEARCH,
+		keyWord
+	}
+}

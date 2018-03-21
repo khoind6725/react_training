@@ -15,7 +15,6 @@ class App extends Component {
         name: '',
         status: -1
       },
-      keyWord: '',
       sortBy: 'name',
       sortValue: 1
     }
@@ -57,12 +56,6 @@ class App extends Component {
     return result
   }
 
-  onSearch = (keyWord) => {
-    this.setState({
-      keyWord: keyWord
-    })
-  }
-
   onSort = (sortBy, sortValue) => {
     this.setState({
       sortBy: sortBy,
@@ -91,12 +84,6 @@ class App extends Component {
       sortBy, 
       sortValue 
     } = this.state
-
-    // if (keyWord) {
-    //   tasks = tasks.filter((task) => {
-    //     return task.name.toLowerCase().indexOf(keyWord.toLowerCase()) !== -1;
-    //   })
-    // }
 
     // if (sortBy === 'name') {
     //   tasks.sort((a,b) => {
@@ -136,7 +123,6 @@ class App extends Component {
             </button>
             {/* TaskControl */}
             <TaskControl 
-              onSearch={ this.onSearch }
               onSort={ this.onSort }
               sortBy={ sortBy }
               sortValue={ sortValue }
