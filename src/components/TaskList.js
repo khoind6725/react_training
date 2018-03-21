@@ -27,7 +27,7 @@ class TaskList extends Component {
   }
 
   render() {
-    let { tasks, filterTable, keyWord } = this.props
+    let { sort, tasks, filterTable, keyWord } = this.props
 
     if (keyWord) {
       tasks = tasks.filter((task) => {
@@ -50,6 +50,21 @@ class TaskList extends Component {
         return task.status === ( filterTable.status === 1 ? true : false);
       }
     })
+
+    if (sort.by === 'name') {
+      tasks.sort((a,b) => {
+        if (a.name > b.name) return sort.value
+        else if (a.name < b.name) return -sort.value
+        else return 0
+      })
+    }
+    else {
+      tasks.sort((a,b) => {
+        if (a.status > b.status) return -sort.value
+        else if (a.status < b.status) return sort.value
+        else return 0
+      })
+    }
 
     let elmTask = tasks.map((task, index) => {
       return <TaskItem 
@@ -104,7 +119,8 @@ const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,
     filterTable: state.filterTable,
-    keyWord: state.search
+    keyWord: state.search,
+    sort: state.sort
   }
 }
 

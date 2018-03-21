@@ -65,3 +65,11 @@ export const searchTask = (keyWord) => {
 		keyWord
 	}
 }
+
+export const sortTask = (by, value) => {
+	return {
+		type: types.SORT,
+		by,
+		value
+	}
+}

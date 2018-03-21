@@ -14,9 +14,7 @@ class App extends Component {
       filter: {
         name: '',
         status: -1
-      },
-      sortBy: 'name',
-      sortValue: 1
+      }
     }
   }
 
@@ -56,13 +54,6 @@ class App extends Component {
     return result
   }
 
-  onSort = (sortBy, sortValue) => {
-    this.setState({
-      sortBy: sortBy,
-      sortValue: sortValue
-    })
-  }
-
   onToggleForm = () => {
     let { itemEditing } = this.props
     if (itemEditing && itemEditing.id !== '') {
@@ -80,26 +71,6 @@ class App extends Component {
   }
 
   render() {
-    let { 
-      sortBy, 
-      sortValue 
-    } = this.state
-
-    // if (sortBy === 'name') {
-    //   tasks.sort((a,b) => {
-    //     if (a.name > b.name) return sortValue
-    //     else if (a.name < b.name) return -sortValue
-    //     else return 0
-    //   })
-    // }
-    // else {
-    //   tasks.sort((a,b) => {
-    //     if (a.status > b.status) return -sortValue
-    //     else if (a.status < b.status) return sortValue
-    //     else return 0
-    //   })
-    // }
-
     return (
       <div className="container">
         <div className="text-center">
@@ -122,11 +93,7 @@ class App extends Component {
               <span className="fa fa-plus mr-5"></span>Thêm Công Việc
             </button>
             {/* TaskControl */}
-            <TaskControl 
-              onSort={ this.onSort }
-              sortBy={ sortBy }
-              sortValue={ sortValue }
-            />
+            <TaskControl/>
             <div className="row mt-15">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 {/* TaskList */}
