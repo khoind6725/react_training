@@ -1,19 +1,7 @@
 import React, { Component } from 'react';
+import * as message from './../constants/Message';
 
 class Product extends Component {
-    showRating = (rating) => {
-        let result = [];
-        if (rating > 0) {
-            for (let i = 1; i <= rating; i++) {
-                result.push(<i key={i} className="fa fa-star"></i>);
-            }
-            for (let j = 1; j <= ( 5 - rating); j++) {
-                result.push(<i key={j + rating} className="fa fa-star-o"></i>);
-            }
-        }
-        return result;
-    }
-
     render() {
         let { product } = this.props;
         return (
@@ -43,7 +31,14 @@ class Product extends Component {
                         <div className="card-footer">
                             <span className="left">{ product.price } $</span>
                             <span className="right">
-                                <a className="btn-floating blue-gradient" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Cart">
+                                <a 
+                                    className="btn-floating blue-gradient" 
+                                    data-toggle="tooltip" 
+                                    data-placement="top" 
+                                    title="" 
+                                    data-original-title="Add to Cart"
+                                    onClick={ () => this.onAddToCart(product) }
+                                >
                                     <i className="fa fa-shopping-cart"></i>
                                 </a>
                             </span>
@@ -52,6 +47,24 @@ class Product extends Component {
                 </div>
             </div>
         );
+    }
+
+    showRating = (rating) => {
+        let result = [];
+        if (rating > 0) {
+            for (let i = 1; i <= rating; i++) {
+                result.push(<i key={i} className="fa fa-star"></i>);
+            }
+            for (let j = 1; j <= (5 - rating); j++) {
+                result.push(<i key={j + rating} className="fa fa-star-o"></i>);
+            }
+        }
+        return result;
+    }
+
+    onAddToCart = (product) => {
+        this.props.onAddToCart(product);
+        this.props.onChangeMessage(message.MSG_ADD_TO_CART_SUCCESS);
     }
 }
 
